@@ -1,0 +1,42 @@
+.error {
+  position: relative;
+  color: red;
+  font-size: 12px;
+
+}
+.shadow {
+  text-shadow: 1px 1px 1px #131212,
+    1px 2px 1px #131212,
+    1px 3px 1px #131212,
+    1px 4px 1px #131212;    
+}
+
+h2 {  
+  color:rgb(163, 31, 52);
+  font-weight: bolder;  
+  text-shadow: 1px 1px 1px #6d6c6c,
+    1px 2px 1px #6d6c6c;
+}
+
+
+.bg {
+  background-image: url("../images/signup.png");
+  background-size: 100%;  
+  background-attachment: fixed;   
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 800;
+
+
+}
+.content {
+  /*border: 5px solid #f3a719;    */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  
+  margin: 0px;
+  padding: 12px;
+  display: flex;
+  align-items: center; 
+  flex-direction: column;  
+  
+}
