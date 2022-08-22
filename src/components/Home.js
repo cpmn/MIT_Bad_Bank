@@ -4,11 +4,14 @@ import University from '../images/university.png';
 import Grandparents from '../images/grandparents.png';
 import Travel from '../images/travel.png';
 
-function Home(){
+
+function Home({ user }){
+
+  const nameUser = (user?.email) ? `${user.firstName} ${user.lastName} ` : "";
     return (
       <>
        <main>
-          <h2 className='shadow-light'>Welcome to online MIT Bad Banking!</h2>
+          <h2 className='shadow-light'>Welcome {nameUser} to online MIT Bad Banking!</h2>
           <h4 >You can do this, I believe in you.</h4>
         </main> 
       <Carousel>
@@ -54,8 +57,6 @@ function Home(){
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-        
-             
       </>
     );  
   }

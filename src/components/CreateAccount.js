@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import { useState } from "react";
 
 function CreateAccount(){
+  
+
   const [success, setSuccess] = useState(false);
   
   const validate = Yup.object({
@@ -28,14 +30,12 @@ function CreateAccount(){
     return (
       <div className="container mt-3 bg">
         <div className="row">
-        <div className="col-md-7">
-            
-        </div>
+          <div className="col-md-7">            
+          </div>        
           <div className="col-md-5">
             <Card>
-              <Card.Header><h3>Create a new Account</h3></Card.Header>
-              <Card.Body>
-                <Card.Text>
+              <Card.Header><h3>Create a new Account:</h3></Card.Header>
+              <Card.Body>                
                   {
                     !success ? (
                       <Formik
@@ -47,12 +47,9 @@ function CreateAccount(){
                           confirmPassword: ''
                         }}
                         validationSchema={validate}
-                        onSubmit={(values, {resetForm} ) => {
-                          console.log(values);
-                          setSuccess(true);
-                          console.log(success);
-                          resetForm({values: ''});
-                          console.log(values);
+                        onSubmit={(values, {resetForm} ) => {                          
+                          setSuccess(true);                          
+                          resetForm({values: ''});                          
                         }}
                       >
                         <Form>
@@ -68,30 +65,21 @@ function CreateAccount(){
 
                     ) : (
                       <Formik                      
-                        onSubmit={(values ) => {
-                          console.log(values);
-                          setSuccess(false);
-
-                          console.log(success);
+                        onSubmit={() => {                          
+                          setSuccess(false);                          
                         }}
                       >
                         <Form>
-                        <button className="btn btn-light mt-3" type="submit">Register a new Account</button>
+                          <button className="btn btn-light mt-3" type="submit">Register a new Account</button>
                         </Form>
-
-                      </Formik>
-                      
+                      </Formik>                      
                     )
-
-                  }
-                  
-                </Card.Text>
+                  }                  
+                
               </Card.Body>
             </Card>
-          </div>
-          
-        </div>
-        
+          </div>          
+        </div>        
       </div>    
     )
   }
