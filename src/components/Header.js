@@ -3,19 +3,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../css/header.css';
 import { Nav, Navbar } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../utils/context';
+import { useContext } from 'react'
 
-function Header({ user, setUser}){ 
+function Header(){ 
+
+   const {user, setUser} = useContext(UserContext);
     let navigate = useNavigate();
     return(
       <Navbar bg="light" variant='light' expand="lg" sticky='top' collapseOnSelect>
         <Navbar.Brand>          
           <a href="#/"><img src= { logo } width="100" alt='MIT BAD BANK LOGO'/></a>
+          {
+            user?.firstName && (<span className='subtitle ml-5' >Hello {user.firstName}!</span>)
+          }
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className='right-aligned' id="responsive-navbar-nav">
-          <Nav activeKey="1">
-            <Nav.Link href="#/">About Us</Nav.Link>
-            <Nav.Link href="#/">Contac Us</Nav.Link>
+          <Nav activeKey="1">          
+            <Nav.Link href="#/">About Us</Nav.Link>            
             <Nav.Link  href="#/CreateAccount/">Enroll</Nav.Link>
             {
               (user?.email) ? (                

@@ -1,10 +1,37 @@
-import { Formik, Form } from 'formik';
+import { Formik, Form, } from 'formik';
 import { TextField } from './TextField';
-import {  Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import * as Yup from 'yup';
-
+import UserInfo from './UserInfo';
+import { UserContext, TransactionsContext } from '../utils/context';
+import { useContext, useState, useEffect } from 'react'
 
 function Transaction ( {type} ){ 
+  
+  const { user, setUser } = useContext(UserContext);
+  const { transactions, setTransactions } = useContext(TransactionsContext);
+  const [success, setSuccess] = useState(false) ;
+
+  const Message = ({ message }) => {
+    const [show, setShow] = useState(true);
+    useEffect(() => {
+      const timeId = setTimeout(() => {        
+        setSuccess(false);
+        setShow(false);
+      }, 4000)  
+      return () => {
+        clearTimeout(timeId)
+      }
+    }, []);
+    if (!show) {
+      return null;
+    }
+    return (
+      <div className={`alert alert-success  text-center`}>
+        {message}
+      </div>
+    )
+  }
   
   const validate = Yup.object({
     Amount: Yup.number()
@@ -14,31 +41,81 @@ function Transaction ( {type} ){
         'invalid decimal ex. 45.25',
         value => (value + "").match(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/),
       )
+      .test('Balance','Amount is greather than your balance, this is not allowed.',
+          function(value) {
+            return type==='Withdraw'? value <= user.balance : true            
+          }
+      )
       .required("Ammount is required")
       .max(1000000, "Maximun amount permited is 1000000"),
     Description: Yup.string()
       .max(100, "Description Mast be 100 characters or less")
       .required("Description required"),   
   });
-  
+
+  const handleSubmit = (values, {resetForm}) => {
+
+    setUser({ ...user, 
+              balance: type === 'Deposit'? user.balance + values.Amount : user.balance - values.Amount
+    });
+    setTransactions([...transactions, 
+      {
+        account: user.account,
+        date: new Date().toDateString(),
+        type: type,
+        amount: values.Amount,
+        description: values.Description  
+      }
+    ]);
+    resetForm();
+    setSuccess(true);         
+  }  
     return (
-      <Formik
-        initialValues={{
-          Amount: '',
-          Description: ''                          
-        }}
-        validationSchema={validate}          
-        
-      >
-      <Form>
-        <TextField label="Amount" name="Amount" type="Number" />     
-        <TextField label="Description" name="Description" type="text" />   
-        <Row className='justify-content-md-center'>
-        <button className="btn btn-dark mt-3" type="submit">{type}</button>
-        </Row>                       
-        
-      </Form>
-    </Formik>                            
+      <div className="container mt-3">
+        <div className="row justify-content-md-center">            
+          <div className="col-md-5">
+            <Card border="secondary" style={{ width: '30rem' }}>
+              <Card.Header>
+                <UserInfo title={type}/>                                
+              </Card.Header>
+              <Card.Body>                
+                <Row>
+                  <Formik
+                    initialValues={
+                      { 
+                        Amount: '', 
+                        Description: '',
+                        Success: false
+                      }}
+                    validationSchema={validate}                     
+                    onSubmit={handleSubmit}
+                  >
+                     {({ errors, values }) => (
+                    <Form>
+                      <TextField label="Amount" name="Amount" type="Number" />     
+                      <TextField label="Description" name="Description" type="text" />   
+                      <Row className='justify-content-md-center'>                      
+                      <button name="submit" className="btn btn-dark mt-3" type="submit" disabled={
+                        values.Amount.length===0 || 
+                        values.Description.length===0 ||
+                        errors.Amount
+                      }>{type}</button>
+                      </Row>                      
+                    </Form>)}
+                  </Formik>
+                </Row>
+                {
+                  success ? (                    
+                    <Row className=' mt-3'>
+                      <Message variant='success' message={`${type} successfull`} />                                          
+                    </Row>                   
+                  ): (<></>)
+                }                
+                </Card.Body>
+            </Card>
+          </div>           
+        </div>        
+      </div>                 
   )
   }
 

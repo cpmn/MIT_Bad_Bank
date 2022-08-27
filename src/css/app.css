@@ -17,6 +17,13 @@ h2 {
   text-shadow: 1px 1px 1px #6d6c6c,
     1px 2px 1px #6d6c6c;
 }
+.subtitle {  
+  color:rgb(163, 31, 52);
+  font-size: x-large;
+  font-weight: bolder;  
+  text-shadow: 1px 1px 1px #6d6c6c,
+    1px 2px 1px #6d6c6c;
+}
 
 
 .bg {

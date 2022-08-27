@@ -3,15 +3,20 @@ import Family from '../images/family.png';
 import University from '../images/university.png';
 import Grandparents from '../images/grandparents.png';
 import Travel from '../images/travel.png';
+import { useContext } from 'react';
+import { UserContext } from '../utils/context';
 
 
-function Home({ user }){
+function Home(){
+  
+  const userContext = useContext(UserContext);
+  console.log("User Context in HOME: ", userContext);
 
-  const nameUser = (user?.email) ? `${user.firstName} ${user.lastName} ` : "";
+
     return (
       <>
        <main>
-          <h2 className='shadow-light'>Welcome {nameUser} to online MIT Bad Banking!</h2>
+          <h2 className='shadow-light'>Welcome to online MIT Bad Banking!</h2>
           <h4 >You can do this, I believe in you.</h4>
         </main> 
       <Carousel>

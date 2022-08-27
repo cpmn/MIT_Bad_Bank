@@ -1,32 +1,26 @@
 import { Card, Row } from "react-bootstrap";
+import UserInfo from './UserInfo';
+import { UserContext, TransactionsContext } from '../utils/context';
+import { useContext } from 'react'
+import TableInformation from "./TableInformation";
 
-function AccountResume( { user } ){ 
+function AccountResume(  ){ 
+
+  const { user } = useContext(UserContext);
+  const { transactions } = useContext(TransactionsContext); 
+  
+  const headers = ['Nro.','Date','Transacction','Description', 'Amount', 'Balance'];
+
     return (
       <div className="container mt-3">
         <div className="row justify-content-md-center">            
           <div className="col-md-5">
-            <Card border="secondary" style={{ width: '30rem' }}>
+            <Card >
               <Card.Header>
-                <Row> 
-                  <div className='col-sm-6 py-1'>
-                    <span className='fw-bolder'>Account: </span>{user.account}
-                  </div>
-                  <div className='col-sm-6 py-1'>
-                    <span className='fw-bolder'>Client: </span>{user.firstName} {user.lastName}
-                  </div>
-                </Row>
-                <Row>
-                  <div className='col-sm-6 py-1'>
-                    <span className='fw-bolder'>Balance: $</span>{user.balance}
-                  </div>                  
-                </Row>
-              </Card.Header>
+                <UserInfo title="User Transactions"/>                
+              </Card.Header>                
               <Card.Body>  
-                <Row>
-                  <div className='col-sm-12'>
-                    <h2 className='shadow-light text-center'>Resume</h2>
-                  </div>
-                </Row>               
+                <TableInformation  columnHeaders={headers} rowInformation={ transactions.filter( u => u.account === user.account )} />
               </Card.Body>
             </Card>
           </div>           
