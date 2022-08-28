@@ -4,20 +4,21 @@ import { TextField } from './TextField';
 import * as Yup from 'yup';
 import { useState, useContext } from "react";
 import { UsersContext } from '../utils/context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserLarge  } from '@fortawesome/free-solid-svg-icons'
 
 function CreateAccount(){  
 
   const [success, setSuccess] = useState(false);
   const {accounts, setAccounts} = useContext(UsersContext);
 
-  const handleSubmit = (values, {resetForm}) => {
-    alert(values.firstName);
+  const handleSubmit = (values, {resetForm}) => {    
     if (!accounts.some( u => u.email === values.email) ){
       setAccounts(
         [
           ...accounts,  
           {
-            account:(Math.floor(Math.random()*90000) + 10000),
+            account:(Math.floor(100000000 + Math.random() * 999000000)).toString().match(/\d{3}(?=\d{2,3})|\d+/g).join("-"),
             firstName:values.firstName, 
             lastName:values.lastName, 
             email: values.email, 
@@ -32,10 +33,12 @@ function CreateAccount(){
   const validate = Yup.object({
     firstName: Yup.string()
       .max(20, "First Name Mast be 20 characters or less")
-      .required("First Name is required"),
+      .required("First Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
     lastName: Yup.string()
       .max(20, "Last Name Mast be 20 characters or less")
-      .required("Last Name is required"),
+      .required("Last Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
     email: Yup.string()
       .email("E-mail is not valid")
       .required("E-mail is required")
@@ -53,16 +56,17 @@ function CreateAccount(){
   });
   
     return (
-      <div className="container mt-3 bg">
-        <div className="row">
-          <div className="col-md-7">            
-          </div>        
+      <div className="container mt-3">
+        <div className="row justify-content-md-center">          
           <div className="col-md-5">
-            <Card>
-              <Card.Header><h3>Create a new Account:</h3></Card.Header>
-              <Card.Body>                
+            <Card >
+              <Card.Header>
+              <h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Create user account</h3></Card.Header>
+              <Card.Body>         
+               
                   {
                     !success ? (
+
                       <Formik
                         initialValues={{
                           firstName: '',
@@ -95,20 +99,15 @@ function CreateAccount(){
                         </Form>
                         )}
                       </Formik>
-
                     ) : (
-                      <Formik                      
-                        onSubmit={() => {                          
-                          setSuccess(false);                          
-                        }}
-                      >
-                        <Form>
-                          <button className="btn btn-light mt-3" type="submit">Register a new Account</button>
-                        </Form>
-                      </Formik>                      
+                    <div className="row justify-content-md-center"> 
+                      <div className="col-md-8 text-center">                      
+                          <div className='alert alert-success  text-center'> User has been created successfully </div>
+                          <button className="btn btn-dark mt-3" type="submit" onClick={() => setSuccess(false)}>Register a new Account</button>                        
+                      </div>                  
+                    </div>                   
                     )
                   }                  
-                
               </Card.Body>
             </Card>
           </div>          

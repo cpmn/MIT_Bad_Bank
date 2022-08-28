@@ -5,12 +5,14 @@ import * as Yup from 'yup';
 import UserInfo from './UserInfo';
 import { UserContext, TransactionsContext } from '../utils/context';
 import { useContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Transaction ( {type} ){ 
   
   const { user, setUser } = useContext(UserContext);
   const { transactions, setTransactions } = useContext(TransactionsContext);
   const [success, setSuccess] = useState(false) ;
+  let navigate = useNavigate();
 
   const Message = ({ message }) => {
     const [show, setShow] = useState(true);
@@ -64,17 +66,24 @@ function Transaction ( {type} ){
         date: new Date().toDateString(),
         type: type,
         amount: values.Amount,
-        description: values.Description  
+        description: values.Description,
+        balance:  type === 'Deposit'? user.balance + values.Amount : user.balance - values.Amount 
       }
     ]);
     resetForm();
     setSuccess(true);         
-  }  
+  }
+  if (user === null) {    
+    navigate('../#/Login');
+  }
+  else {  
+
+  
     return (
       <div className="container mt-3">
         <div className="row justify-content-md-center">            
           <div className="col-md-5">
-            <Card border="secondary" style={{ width: '30rem' }}>
+            <Card >
               <Card.Header>
                 <UserInfo title={type}/>                                
               </Card.Header>
@@ -118,5 +127,6 @@ function Transaction ( {type} ){
       </div>                 
   )
   }
+}
 
   export default Transaction;

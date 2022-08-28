@@ -4,7 +4,9 @@ import { TextField } from './TextField';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { UserContext, UsersContext } from '../utils/context';
-import { useContext } from 'react'
+import { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserLarge  } from '@fortawesome/free-solid-svg-icons'
 
 
 function Login(){ 
@@ -47,7 +49,7 @@ function Login(){
         <Row className="justify-content-md-center">
         <div className="col-md-5">
           <Card>
-            <Card.Header><h3>Login</h3></Card.Header>
+            <Card.Header><h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Login</h3></Card.Header>
             <Card.Body>                
               <Formik
                 initialValues={{

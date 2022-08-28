@@ -1,3 +1,4 @@
+
 .error {
   position: relative;
   color: red;
@@ -12,38 +13,29 @@
 }
 
 h2 {  
-  color:rgb(163, 31, 52);
+  margin-top: 10px;  
   font-weight: bolder;  
   text-shadow: 1px 1px 1px #6d6c6c,
-    1px 2px 1px #6d6c6c;
-}
-.subtitle {  
-  color:rgb(163, 31, 52);
-  font-size: x-large;
-  font-weight: bolder;  
-  text-shadow: 1px 1px 1px #6d6c6c,
-    1px 2px 1px #6d6c6c;
+    1px 2px 1px #080808,
+    1px 3px 1px #080808;
 }
 
 
-.bg {
-  background-image: url("../images/signup.png");
-  background-size: 100%;  
+.div-title {  
+  color: white;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.content {
+  border: 1px solid #000000;     
+  font-family: Georgia, 'Times New Roman', Times, serif;  
+  background-image: url("../images/mit_institution.jpg");    
+  background-size: cover;  
   background-attachment: fixed;   
   background-position: center;
   background-repeat: no-repeat;
-  height: 800;
-
-
-}
-.content {
-  /*border: 5px solid #f3a719;    */
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  
-  margin: 0px;
-  padding: 12px;
-  display: flex;
-  align-items: center; 
-  flex-direction: column;  
-  
+  min-height: 600px;
 }

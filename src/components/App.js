@@ -18,12 +18,12 @@ function App() {
   const [transactions, setTransactions ] = useState(transaction);
 
   return (
-    <div className="App">      
+    <div>      
     <UserContext.Provider value={{user, setUser}}>
     <UsersContext.Provider value={{accounts, setAccounts}}>
     <TransactionsContext.Provider value={{transactions, setTransactions}}>
       <Header />
-      <div className='content'>      
+      <div className='content App'>      
         <Routes>
             <Route path="/*" element={<Home  />} />
             <Route path="/Login" element={<Login />} />

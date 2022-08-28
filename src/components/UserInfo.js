@@ -3,13 +3,14 @@ import { UserContext } from '../utils/context';
 import { useContext } from 'react'
 
 function UserInfo ( {title} ){
-
+  
+  let dollarUS = Intl.NumberFormat('en-US');  
   const { user } = useContext(UserContext);
   return (
     <>
     <Row>
       <div className='col-sm-12'>
-        <h2 className='shadow-light text-center'>{title}</h2>
+        <h3 className='shadow-light text-center'>{title}</h3>
         <hr />
       </div>
     </Row> 
@@ -23,7 +24,7 @@ function UserInfo ( {title} ){
     </Row>
     <Row>
       <div className='col-sm-6 py-1'>
-        <span className='fw-bolder'>Balance: $</span>{user.balance}
+        <span className='fw-bolder'>Balance: $ </span>{dollarUS.format(user.balance)}
       </div>                  
     </Row>
     </>
