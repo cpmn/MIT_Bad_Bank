@@ -18,26 +18,27 @@ function App() {
   const [transactions, setTransactions ] = useState(transaction);
 
   return (
-    <div>      
+    <>      
     <UserContext.Provider value={{user, setUser}}>
     <UsersContext.Provider value={{accounts, setAccounts}}>
     <TransactionsContext.Provider value={{transactions, setTransactions}}>
-      <Header />
-      <div className='content App'>      
-        <Routes>
-            <Route path="/*" element={<Home  />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/CreateAccount" element={<CreateAccount  />} />            
-            <Route path="/Deposit" element={<Transaction  type="Deposit"/>} />
-            <Route path="/Withdraw" element={<Transaction type="Withdraw"/>} />
-            <Route path="/AccountResume" element={<AccountResume  />} />            
-        </Routes>            
-      </div>   
-      <Footer />  
-      </TransactionsContext.Provider>
-      </UsersContext.Provider>
-      </UserContext.Provider>
+    <Header />      
+    <div className='content'>
+      <Routes>
+        <Route path="/*" element={<Home  />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/CreateAccount" element={<CreateAccount  />} />            
+        <Route path="/Deposit" element={<Transaction  type="Deposit"/>} />
+        <Route path="/Withdraw" element={<Transaction type="Withdraw"/>} />
+        <Route path="/AccountResume" element={<AccountResume  />} />            
+      </Routes>
     </div>
+        
+    <Footer />  
+    </TransactionsContext.Provider>
+    </UsersContext.Provider>
+    </UserContext.Provider>
+    </>
   );
 }
 

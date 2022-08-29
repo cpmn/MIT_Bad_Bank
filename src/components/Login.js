@@ -44,10 +44,9 @@ function Login(){
       ),
   });
   
-    return (
-      <div className="container mt-3">  
-        <Row className="justify-content-md-center">
-        <div className="col-md-5">
+    return (      
+      <Row className="justify-content-md-center">
+        <div className="col-md-5 mt-5">
           <Card>
             <Card.Header><h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Login</h3></Card.Header>
             <Card.Body>                
@@ -77,8 +76,7 @@ function Login(){
             </Card.Body>
           </Card>
           </div>
-        </Row>            
-      </div>                               
+        </Row>
     )
   }
 

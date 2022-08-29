@@ -1,10 +1,22 @@
-
-.error {
-  position: relative;
-  color: red;
-  font-size: 12px;
-
+.body
+{
+  background-color: #f0f0f1;
+  font-family: Helvetica, Arial, sans-serif;
 }
+.content {
+  font-family: Helvetica, Arial, sans-serif;
+  background-image: url("../images/mit_institution.jpg");
+  background-size: cover;   
+  background-attachment: local;
+  background-repeat: no-repeat;
+  min-height: 650px;  
+}
+
+.text-white-center {  
+  color: white;  
+  text-align: center;  
+}
+
 .text-shadow {
   text-shadow: 1px 1px 1px #131212,
     1px 2px 1px #131212,
@@ -12,50 +24,16 @@
     1px 4px 1px #131212;    
 }
 
-h2 {  
-  margin-top: 10px;  
-  font-weight: bolder; 
-  color: aliceblue; 
-  text-shadow: 1px 1px 1px #6d6c6c,
-    1px 2px 1px #080808,
-    1px 3px 1px #080808;
-}
-.container {  
-  position: absolute;
-  height: 65%;
-}
-
 .bottomright {
-  /*border: 10px solid #88da58;*/
+  border: 0px solid #88da58;
   position: absolute;
-  bottom: 40px;
-  right: 16px;
-  font-size: 18px;
-}
-
-
-
-.div-title {  
+  text-align: right;
+  bottom: 30%;  
   color: white;
-  width: 100%;
+}
+
+.error {
   position: relative;
-  text-align: center;
-  margin-top: 10px;
-}
-
-
-.content {
-  border: 1px solid #000000;     
-  font-family: Georgia, 'Times New Roman', Times, serif;  
-  background-image: url("../images/mit_institution.jpg");    
-  background-size: cover;  
-  background-attachment: local;   
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 600px;
-}
-
-.border{
-  border: 10px solid #88da58;
-  height: 20%; 
+  color: red;
+  font-size: 12px;
 }

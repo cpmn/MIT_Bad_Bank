@@ -55,11 +55,10 @@ function CreateAccount(){
       .required("Confirm Passord is required"),
   });
   
-    return (
-      <div className="container mt-3">
+    return (      
         <div className="row justify-content-md-center">          
-          <div className="col-md-5">
-            <Card >
+          <div className="col-md-5 mt-5">
+            <Card>
               <Card.Header>
               <h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Create user account</h3></Card.Header>
               <Card.Body>         
@@ -111,8 +110,7 @@ function CreateAccount(){
               </Card.Body>
             </Card>
           </div>          
-        </div>        
-      </div>    
+        </div>       
     )
   }
 

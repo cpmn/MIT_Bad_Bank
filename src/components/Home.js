@@ -36,19 +36,17 @@ import  axios  from 'axios'
   useEffect(() => {
     getGeoInfo();
   });
-  
-   
     return (
-      <div className='container'>
-        <div >
-          <h1 className='div-title text-shadow  '>Welcome To MIT Bad Banking!</h1>          
-        </div> 
-        <div className="bottomright">
-          <h2>{state.countryName} - {state.city}</h2>
-          <h2>Currency: {state.currency}</h2>
-          <h2>{new Date().toDateString()}</h2>      
-        </div>
+     <div className='row justify-content-md-center'>
+      <h1 className='text-white-center text-shadow'>Welcome To MIT Bad Banking!</h1>
+      <div className="bottomright text-shadow">
+        <h2>{state.city} - {state.countryName}</h2>
+        <h2>Currency: {state.currency}</h2>
+        <h2>{new Date().toDateString()}</h2>
       </div>
+
+     </div>
+     
     );  
   }
   

@@ -5,11 +5,9 @@
     justify-content: flex-end;
 }
 .nav-link {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Helvetica, Arial, sans-serif;
   display:block;
-  font-size: large;
-  
-  color:white;  
+  font-size: large;  
 }
 .nav-link:hover {  
   color:rgb(85, 83, 83);

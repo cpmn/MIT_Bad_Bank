@@ -1,4 +1,5 @@
 import React from 'react'
+import { Row } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/footer.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,16 +8,14 @@ import { faFacebook, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-i
 
 const Footer = ()  => {
   return (
-    <div className='main-footer'> 
-      <div className='container'>
-        <div className='row'>
+    <div className='container main-footer '> 
+      <Row>
           <div className='col mt-4'>
             <h4><FontAwesomeIcon icon={faBuildingColumns} /> MIT Bad Bank</h4>
             <ul className='list-unstyled'>
               <li className='pt-2'><FontAwesomeIcon icon={faPhone} />  (+591) 769-007-84</li>
               <li className='pt-2'><FontAwesomeIcon icon={faEnvelope} />  cpmn@mit-BabBank.com</li>
               <li className='pt-2'><FontAwesomeIcon icon={faHome} /> Cochabamba, 1999 Lincoln Avenue, BO</li>
-              
             </ul>
           </div>
           <div className='col mt-4'>
@@ -35,14 +34,12 @@ const Footer = ()  => {
               <li className='pt-2'><FontAwesomeIcon icon={faGithub} /> cpmn</li>              
             </ul>
           </div>
-        </div>
-        <div className='row'>
-          <p className='col text-center mt-4'>
-            &copy;{new Date().getFullYear()} - MIT Bad Bank - Claudia Muñoz  | ALL RIGHT RESERVED | Terms Of Services | Privacy
-          </p>
-        </div>
-
-      </div>
+      </Row>
+      <Row>
+        <p className='col text-center mt-2'>
+          &copy;{new Date().getFullYear()} - MIT Bad Bank - Claudia Muñoz  | ALL RIGHT RESERVED | Terms Of Services | Privacy
+        </p>
+      </Row>
     </div>
   )
         

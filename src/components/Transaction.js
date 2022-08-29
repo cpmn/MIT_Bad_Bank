@@ -79,10 +79,9 @@ function Transaction ( {type} ){
   else {  
 
   
-    return (
-      <div className="container mt-3">
+    return (      
         <div className="row justify-content-md-center">            
-          <div className="col-md-5">
+          <div className="col-md-5 mt-5">
             <Card >
               <Card.Header>
                 <UserInfo title={type}/>                                
@@ -122,8 +121,7 @@ function Transaction ( {type} ){
                 </Card.Body>
             </Card>
           </div>           
-        </div>        
-      </div>                 
+        </div>   
   )
   }
 }
