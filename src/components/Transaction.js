@@ -93,8 +93,7 @@ function Transaction ( {type} ){
                     initialValues={
                       { 
                         Amount: '', 
-                        Description: '',
-                        Success: false
+                        Description: ''                        
                       }}
                     validationSchema={validate}                     
                     onSubmit={handleSubmit}

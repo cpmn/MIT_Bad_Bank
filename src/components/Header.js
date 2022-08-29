@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../utils/context';
 import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faSignOut, faUserPlus, faFileInvoice, faPiggyBank, faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faSignOut, faUserPlus, faFileInvoice, faPiggyBank, faHandHoldingDollar, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 
 function Header(){ 
+  const hours = new Date().getHours();  
 
    const {user, setUser} = useContext(UserContext);
     let navigate = useNavigate();
@@ -17,7 +18,15 @@ function Header(){
         <Navbar.Brand>          
           <a href="#/"><img src= { logo } width="100" alt='MIT BAD BANK LOGO'/></a>
           {
-            user?.firstName && (<span className='subtitle ml-5' ><FontAwesomeIcon icon={faUser} /> Hello {user.firstName}!</span>)
+            user?.firstName && (
+            <span className='ml-5'>
+              {
+                hours >=12 ? hours >=17 ? <><FontAwesomeIcon icon={faMoon} /> Good Evening </> 
+                : <><FontAwesomeIcon icon={faSun} /> Good Afternoon </>
+                : <><FontAwesomeIcon icon={faSun} /> Good Morning </>
+              }
+              {user.firstName}!
+            </span>)
           }
         </Navbar.Brand>
         <Navbar.Toggle />
