@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import { Formik, Form } from 'formik';
 import { TextField } from './TextField';
 import * as Yup from 'yup';
@@ -55,17 +55,15 @@ function CreateAccount(){
       .required("Confirm Passord is required"),
   });
   
-    return (      
-        <div className="container row justify-content-md-center">          
-          <div className="col-md-5 mt-5">
-            <Card style={{ minWidth: '18rem', maxWidth: '50rem' }}>
-              <Card.Header>
+    return ( 
+      <Row className="justify-content-md-center">              
+        <div className="col-md-4 mt-5">
+          <Card style={{ minWidth: '18rem', maxWidth: '30rem' }}>
+            <Card.Header>
               <h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Create user account</h3></Card.Header>
-              <Card.Body>         
-               
-                  {
-                    !success ? (
-
+            <Card.Body>               
+              {
+                !success ? (
                       <Formik
                         initialValues={{
                           firstName: '',
@@ -110,7 +108,7 @@ function CreateAccount(){
               </Card.Body>
             </Card>
           </div>          
-        </div>       
+        </Row>       
     )
   }
 

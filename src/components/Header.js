@@ -59,8 +59,7 @@ function Header(){
                   </Nav.Link>
                 </>
               ): (                
-                <Nav.Link href="#/Login/"  data-tip data-for="login"><FontAwesomeIcon icon={faUser} />  
-                 Login
+                <Nav.Link href="#/Login/"  data-tip data-for="login"><FontAwesomeIcon icon={faUser} /> Login
                 <ReactTooltip id="login" place='top'>Login to Bad Bank application</ReactTooltip>
                 </Nav.Link>
               )

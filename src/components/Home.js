@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Row } from "react-bootstrap";
 import  axios  from 'axios'
 
 
@@ -37,16 +38,16 @@ import  axios  from 'axios'
     getGeoInfo();
   });
     return (
-     <div className='row container'>
-      <h1 className='text-white-center text-shadow'>Welcome To MIT Bad Banking!</h1>
-      <div className="bottomright text-shadow">
-        <h2>{state.city} - {state.countryName}</h2>
-        <h2>Currency: {state.currency}</h2>
-        <h2>{new Date().toDateString()}</h2>
+     <Row className='container'>
+      <div className='col mt-4'>
+        <h1 className='text-white-center text-shadow'>Welcome To MIT Bad Banking!</h1>
+      </div>       
+        <div className="bottomright text-shadow">
+          <h2>{state.city} - {state.countryName}</h2>
+          <h2>Currency: {state.currency}</h2>
+          <h2>{new Date().toDateString()}</h2>     
       </div>
-
-     </div>
-     
+    </Row>     
     );  
   }
   

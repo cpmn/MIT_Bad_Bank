@@ -14,7 +14,9 @@
   justify-content: center !important;
 }
 
-.text-white-center {  
+.text-white-center { 
+  border: 0px solid #88da58;
+  width: 100%; 
   color: white;  
   text-align: center;  
 }
@@ -30,7 +32,7 @@
   border: 0px solid #88da58;
   position: absolute;
   text-align: right;
-  bottom: 30%;  
+  bottom: 50%;  
   color: white;
 }
 
