@@ -48,7 +48,7 @@ function CreateAccount(){
         return !accounts.some( u => u.email === value);
       }),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
+      .min(8, "Password must be at least 8 characters")
       .required("Passord is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], "Password must match")
@@ -56,9 +56,9 @@ function CreateAccount(){
   });
   
     return (      
-        <div className="row justify-content-md-center">          
+        <div className="container row justify-content-md-center">          
           <div className="col-md-5 mt-5">
-            <Card>
+            <Card style={{ minWidth: '18rem', maxWidth: '50rem' }}>
               <Card.Header>
               <h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Create user account</h3></Card.Header>
               <Card.Body>         

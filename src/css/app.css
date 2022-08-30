@@ -9,7 +9,9 @@
   background-size: cover;   
   background-attachment: local;
   background-repeat: no-repeat;
-  min-height: 650px;  
+  width: 100%;
+  min-height: 650px; 
+  justify-content: center !important;
 }
 
 .text-white-center {  

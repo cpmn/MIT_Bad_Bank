@@ -23,7 +23,7 @@ function App() {
     <UsersContext.Provider value={{accounts, setAccounts}}>
     <TransactionsContext.Provider value={{transactions, setTransactions}}>
     <Header />      
-    <div className='content'>
+    <div className='content justify-content-md-center'>
       <Routes>
         <Route path="/*" element={<Home  />} />
         <Route path="/Login" element={<Login />} />
@@ -32,8 +32,7 @@ function App() {
         <Route path="/Withdraw" element={<Transaction type="Withdraw"/>} />
         <Route path="/AccountResume" element={<AccountResume  />} />            
       </Routes>
-    </div>
-        
+    </div>        
     <Footer />  
     </TransactionsContext.Provider>
     </UsersContext.Provider>

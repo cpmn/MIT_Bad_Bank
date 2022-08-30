@@ -76,9 +76,7 @@ function Transaction ( {type} ){
   if (user === null) {    
     navigate('../#/Login');
   }
-  else {  
-
-  
+  else {    
     return (      
         <div className="row justify-content-md-center">            
           <div className="col-md-5 mt-5">

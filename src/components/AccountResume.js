@@ -22,7 +22,7 @@ function AccountResume(  ){
     return (      
       <div className="row justify-content-md-center">          
       <div className="col-md-5 mt-5">
-        <Card >
+        <Card>
           <Card.Header>
             <UserInfo title="User Transactions"/>                
           </Card.Header>                

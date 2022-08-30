@@ -37,7 +37,7 @@ import  axios  from 'axios'
     getGeoInfo();
   });
     return (
-     <div className='row justify-content-md-center'>
+     <div className='row container'>
       <h1 className='text-white-center text-shadow'>Welcome To MIT Bad Banking!</h1>
       <div className="bottomright text-shadow">
         <h2>{state.city} - {state.countryName}</h2>
