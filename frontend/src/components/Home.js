@@ -5,7 +5,6 @@ import  axios  from 'axios'
 
  function Home(){
   
-// Expected output "Sunday, 20 December 2020 at 14:23:16 GMT+11"
 
   const [state, setState] = useState({
     ip: "",

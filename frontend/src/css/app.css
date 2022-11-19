@@ -5,13 +5,15 @@
 }
 .content {
   font-family: Helvetica, Arial, sans-serif;
+  background-color: cornflowerblue;
   background-image: url("../images/mit_institution.jpg");
+
   background-size: cover;   
   background-attachment: local;
-  background-repeat: no-repeat;
-  width: 100%;
-  min-height: 650px; 
+  background-repeat: no-repeat;  
+  min-height:80vh;  
   justify-content: center !important;
+  
 }
 
 .text-white-center { 
@@ -41,3 +43,10 @@
   color: red;
   font-size: 12px;
 }
+.layout {
+  min-height:100vh; 
+  display:flex; 
+  flex-direction:column; 
+  justify-content:space-between;
+}
+
