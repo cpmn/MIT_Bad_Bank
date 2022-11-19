@@ -40,9 +40,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Technology 
 
 <div align="center" id="top"> 
-  <img src="./mern.png" alt="MERN" />
-  <img src="./Docker.png" alt="Docker" />
-  <img src="./Firebase.png" alt="Firebase" />  
+  <img src="./documentation/images/mern.png" alt="MERN" />
+  <img src="./documentation/images/Docker.png" alt="Docker" />
+  <img src="./documentation/images/Firebase.png" alt="Firebase" />  
 </div>
 
 ## :memo: License ##
