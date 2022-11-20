@@ -9,7 +9,11 @@ const port = process.env.API_PORT || 5000;
 
 // Used to serve static files from public directory
 app.use(express.static('public'));
-app.use(cors());
+app.use(cors(
+  {
+    origin: process.env.ALLOWED_ORIGINS
+  }
+));
 
 // Morgan will show all API petition in the server
 app.use(morgan('dev'));
