@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 
 //Get all user
-router.get('/users',  async (req, res) => {     
+router.get('/users',  token.verifyToken, async (req, res) => {     
   const users = await User.find();
   console.log("USERS: ", users);
   res.json(users);
@@ -34,7 +34,7 @@ router.get('/user/:email', token.verifyToken, async (req, res) => {
 
 //Add a new user
 router.post('/user', async (req, res) => {  
-  const { name, email, password, provider, role } = req.body;
+  const { name, email, provider, role } = req.body;
   const user = await User.find({email});
   if (!user.length > 0) {
     const account = (Math.floor(100000000 + Math.random() * 999000000)).toString().match(/\d{3}(?=\d{2,3})|\d+/g).join("-");
@@ -43,7 +43,7 @@ router.post('/user', async (req, res) => {
       await user.save(); 
       res.json({ status: 0, message: 'User has been created successfully'})
     }else {
-      const user = new User({account, name, email, password, balance: 0, provider, role, });
+      const user = new User({account, name, email, balance: 0, provider, role, });
       await user.save(); 
       res.json({ status: 0, message: 'User has been created successfully'})
     }

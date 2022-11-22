@@ -1,0 +1,210 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0", 
+        "title": "Bad Bank Capstone Project",
+        "description": "Bad Bank Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get all user in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:email": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get a user by email",
+                "parameters":[
+                    {
+                        "email": "email",
+                        "in": "path"
+                        
+                    }
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:account": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get a user by bank account number",
+                "parameters":[
+                    {
+                        "account": "account",
+                        "in": "path"                        
+                    }
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Add a user to the system, This api will used after register a user in firebase. so you can not add the user without authorization.",                                
+                "parameters":[
+                    {
+                        "email": "email",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                  
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "OK"                       
+                    }
+                }
+            }
+        },
+        "/transactions/:account": {
+            "get": {
+                "tags": ["Transactions"],
+                "summary": "Get all transaccions for specific user bank account",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Transactions"
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction/": {
+            "post": {
+                "tags": ["Transactions"],
+                "summary": "Register a Deposit or a Withdraw bases in the user email and account number.",
+                
+                "parameters":[
+                    {
+                        "account": "account",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Transactions"
+                        }                        
+                    }
+                ], 
+               
+                "responses": {
+                    "200": {
+                        "description": "OK"                  
+                    }
+                }
+            }
+        },
+        "/transaction/transfer": {
+            "post": {
+                "tags": ["Transactions"],
+                "summary": "Register a Transfer from origin account to destination account bases in the user email and account number.",
+                
+                "parameters":[
+                    {
+                        "account": "account",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Transactions"
+                        }                        
+                    }
+                ], 
+               
+                "responses": {
+                    "200": {
+                        "description": "OK"                  
+                    }
+                }
+            }
+        }        
+    },
+    "definitions": {
+        "Users": {
+            "required": ["name","email"],
+            "properties": {
+                "account":{
+                    "type": "string"                    
+                },
+                "name": {
+                    "type": "string"                    
+                },
+                "email": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "balance": {
+                    "type": "integer"                    
+                },
+                "provider": {
+                    "type": "string"                    
+                }
+            }
+        },
+        "Transactions": {
+            "required": ["account","type","amount"],
+            "properties": {
+                "account":{
+                    "type": "string"                    
+                },
+                "type": {
+                    "type": "string"                    
+                },
+                "amount": {
+                    "type": "integer"                    
+                },
+                "balance": {
+                    "type": "integer"                    
+                }                
+            }
+        }
+    }
+}
+
+
+
+
