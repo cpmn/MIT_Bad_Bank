@@ -1,49 +1,33 @@
 import { useState } from 'react'
 import { Row } from "react-bootstrap";
-//import  axios  from 'axios'
+import {getGeo} from 'geoplugin';
 
+ function Home(){  
 
- function Home(){
-  
+  const [geoInfo, setGeoInfo] = useState({});
 
-  const [state] = useState({
-    ip: "",
-    countryName: "Bolivia",
-    countryCode: "BO",
-    city: "Cochabamba",
-    timezone: "",
-    currency:"BOB"
-  });
+ getGeo()
+  .then(response => {    
+    setGeoInfo({
+      city: response.city, 
+      continentName: response.continentName,
+      countryName: response.countryName,
+      currencyCode: response.currencyCode,
+      currencyConverter: response.currencyConverter
 
-  /*const getGeoInfo = () => {
-    axios
-      .get("https://ipapi.co/json/")
-      .then((response) => {
-        let data = response.data;
-        setState({
-          ...state,
-          ip: data.ip,
-          countryName: data.country_name,          
-          city: data.city,          
-          currency: data.currency
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    })}
+    ) // handle success
+  .catch(error => console.log(error)) // handle error
 
-  useEffect(() => {
-    getGeoInfo();
-  });*/
     return (
      <Row className='container'>
       <div className='col mt-4'>
         <h1 className='text-white-center text-shadow'>Welcome To MIT Bad Banking!</h1>
       </div>       
         <div className="bottomright text-shadow">
-          <h2>{state.city} - {state.countryName}</h2>
-          <h2>Currency: {state.currency}</h2>
+          <h2>{geoInfo.continentName} </h2>
+          <h2>{geoInfo.city} - {geoInfo.countryName} </h2>
+          <h2>Currency: {geoInfo.currencyCode}</h2>          
           <h2>{new Date().toDateString()}</h2>     
       </div>
     </Row>     
