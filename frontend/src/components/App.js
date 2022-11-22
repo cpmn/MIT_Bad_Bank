@@ -7,7 +7,8 @@ import Login from './Login';
 import Footer from './Footer';
 import Transaction from './Transaction';
 import AccountResume from './AccountResume';
-import {AuthProvider} from '../config/auth'
+import {AuthProvider} from '../config/auth';
+import RequireAuth from './PrivateRoute';
 
 
 function App() {    
@@ -21,10 +22,24 @@ function App() {
         <Route path="/*" element={<Home  />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/CreateAccount" element={<CreateAccount  />} />            
-        <Route path="/Deposit" element={<Transaction  type="Deposit"/>} />
-        <Route path="/Withdraw" element={<Transaction type="Withdraw"/>} />
-        <Route path="/Transfer" element={<Transaction type="Transfer"/>} />
-        <Route path="/AccountResume" element={<AccountResume  />} />            
+        <Route path="/Deposit" element={
+          <RequireAuth>
+            <Transaction  type="Deposit"/>
+          </RequireAuth>
+        }/>
+        <Route path="/Withdraw" element={
+          <RequireAuth>
+            <Transaction type="Withdraw"/>
+          </RequireAuth>
+        } />
+        <Route path="/Transfer" element={
+          <RequireAuth>
+            <Transaction type="Transfer"/>
+          </RequireAuth>
+        } />
+        <Route path="/AccountResume" element={
+          <RequireAuth><AccountResume  /></RequireAuth>          
+        } />            
       </Routes>
       </AuthProvider>
     </div>        
