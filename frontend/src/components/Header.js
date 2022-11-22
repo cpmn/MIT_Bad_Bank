@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../css/header.css';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReactTooltip from 'react-tooltip';
 import { 
@@ -19,38 +18,39 @@ import {
   faWallet
 } from '@fortawesome/free-solid-svg-icons'
 import { auth } from "../config/firebase";
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 function Header(){ 
-  const hours = new Date().getHours();
-   
-   const [curUser, setCurUser] = useState('');
-   
-   useEffect(() => {    
-    onAuthStateChanged(auth, (currentUser)=>{
-    setCurUser(currentUser);
-    
-   })
-   },[]); 
-
-   (curUser?.email) ? console.log("USUARIO: ", curUser.email) : console.log("NO EXISTE USUARIO LOGGEADO!")
-
   let navigate = useNavigate();
+  const hours = new Date().getHours();  
+  const [user, loading, error] = useAuthState(auth);
+  console.log("USER-HOOK: ", user);
+  if (loading) {
+    return (
+      <>
+       <h1> Loading ...</h1>
+      </>
+    );
+  }
+  if (error) {
+    console.log(error);
+  }  
   return(
     <Navbar bg="light" variant='light' expand="lg" sticky='top' collapseOnSelect>
       <Navbar.Brand>          
         <a href="#/" data-tip data-for="home"><img src= { logo } width="100" alt='MIT BAD BANK LOGO'/></a>
         <ReactTooltip id="home" place='top'>MIT Bad Bank Home Page</ReactTooltip>
           {
-            curUser?.email && (
+            user?.email && (
             <span className='ml-5'>
               {
                 hours >=12 ? hours >=17 ? <><FontAwesomeIcon icon={faMoon} /> Good Evening </> 
                 : <><FontAwesomeIcon icon={faSun} /> Good Afternoon </>
                 : <><FontAwesomeIcon icon={faSun} /> Good Morning </>
               }
-              {curUser.email}
+              {user.email}
             </span>)
           }
       </Navbar.Brand>
@@ -58,7 +58,7 @@ function Header(){
       <Navbar.Collapse className='right-aligned mx-2' id="responsive-navbar-nav">
         <Nav activeKey="1">            
           {
-            (curUser?.email) ? (                
+            (user?.email) ? (                
               <>               
                 <NavDropdown className='mr-5' title={
                   <span>

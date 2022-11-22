@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Row } from "react-bootstrap";
-import  axios  from 'axios'
+//import  axios  from 'axios'
 
 
  function Home(){
   
 
-  const [state, setState] = useState({
+  const [state] = useState({
     ip: "",
     countryName: "Bolivia",
     countryCode: "BO",
@@ -15,7 +15,7 @@ import  axios  from 'axios'
     currency:"BOB"
   });
 
-  const getGeoInfo = () => {
+  /*const getGeoInfo = () => {
     axios
       .get("https://ipapi.co/json/")
       .then((response) => {
@@ -35,7 +35,7 @@ import  axios  from 'axios'
 
   useEffect(() => {
     getGeoInfo();
-  });
+  });*/
     return (
      <Row className='container'>
       <div className='col mt-4'>
