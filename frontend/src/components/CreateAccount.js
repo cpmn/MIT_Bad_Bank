@@ -7,15 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserLarge  } from '@fortawesome/free-solid-svg-icons';
 import  axios  from 'axios';
 import Swal from 'sweetalert2';
-import { 
-  createUserWithEmailAndPassword,
-} from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from "../config/firebase";
+
 
 const userAPI = process.env.REACT_APP_API_URL+'/user';
 
 function CreateAccount(){  
-  let navigate = useNavigate();
+  let navigate = useNavigate(); 
 
   const handleSubmit = (values, {resetForm}) => {
     createUserWithEmailAndPassword(auth, values.email, values.password)

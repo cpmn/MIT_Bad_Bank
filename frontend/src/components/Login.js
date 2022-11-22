@@ -8,13 +8,16 @@ import { faUserLarge  } from '@fortawesome/free-solid-svg-icons';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from "../config/firebase";
 import Swal from 'sweetalert2';
-
 import  axios  from 'axios'
+import { useContext } from "react";
+import { AuthContext } from "../config/auth";
+import { signOut } from 'firebase/auth'
 
 const userAPI = process.env.REACT_APP_API_URL+'/user';
 
 function Login(){ 
-  let navigate = useNavigate();    
+
+  let navigate = useNavigate();
   
   const handleSubmit = (values) => {
     signInWithEmailAndPassword(auth, values.email, values.password)
@@ -55,9 +58,6 @@ function Login(){
         } 
       }); 
   }
-  
-  
- 
 
   const loginWithGoogle = async () => {   
     
@@ -80,9 +80,10 @@ function Login(){
     }) ;
     
   }
-  
-    return (      
-      <Row className="justify-content-md-center">
+  const { currentUser } = useContext(AuthContext);
+    return (
+      (!currentUser)?(
+        <Row className="justify-content-md-center">
         <div className="col-md-4 mt-5">
           <Card style={{ minWidth: '16rem', maxWidth: '20rem' }}>
             <Card.Header><h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Login</h3></Card.Header>
@@ -94,6 +95,24 @@ function Login(){
           </Card>
           </div>
         </Row>
+      ):(
+        <Row className="justify-content-md-center">
+        <div className="col-md-4 mt-5">
+          <Card style={{ minWidth: '16rem', maxWidth: '20rem' }}>
+            <Card.Header><h3 className="text-center"><FontAwesomeIcon icon={faUserLarge} /> Login</h3></Card.Header>
+            <Card.Body>
+              <p> You are already logged</p>
+              <button  className="btn btn-large btn-block btn-primary mt-3 " 
+                onClick={()=>{
+                  signOut(auth);
+                  navigate('/');
+                }}>Log out</button>  
+            </Card.Body>
+          </Card>
+          </div>
+        </Row>
+      )
+      
     )
   }
 

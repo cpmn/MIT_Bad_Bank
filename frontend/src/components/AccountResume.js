@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from "../config/auth";
 import { Card } from "react-bootstrap";
 import UserInfo from './UserInfo';
 import TableInformation from "./TableInformation";
 import Unauthorized from './Unauthorized';
-import { auth } from "../config/firebase";
 import  axios  from 'axios'
 
 const userAPI = process.env.REACT_APP_API_URL+'/user';
@@ -11,16 +11,15 @@ const transactionsAPI = process.env.REACT_APP_API_URL+'/transactions';
 
 function AccountResume(){ 
 
+  const { currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});  
   const [transactions, setTransactions] = useState([]);
 
-  useEffect(() => {   
-    const userToken = auth.currentUser;    
-    
-    userToken.getIdToken()    
+  useEffect(() => {
+    currentUser.getIdToken()    
       .then( idToken => {      
         //Get user information   
-        axios.get(`${userAPI}/${userToken.email}`, {headers: { 'Authorization' : idToken }})
+        axios.get(`${userAPI}/${currentUser.email}`, {headers: { 'Authorization' : idToken }})
         .then( res =>{          
           if(res.status === 200){
             setUser({
@@ -37,7 +36,7 @@ function AccountResume(){
           }          
         }).catch( e => console.error(e));
       }).catch( e => console.error(e));  
-  },[]);
+  },[currentUser]);
 
     const headers = ['#','Date','Transacction','Description', 'Amount', 'Balance'];    
     return (      

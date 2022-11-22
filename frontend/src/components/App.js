@@ -7,6 +7,7 @@ import Login from './Login';
 import Footer from './Footer';
 import Transaction from './Transaction';
 import AccountResume from './AccountResume';
+import {AuthProvider} from '../config/auth'
 
 
 function App() {    
@@ -15,6 +16,7 @@ function App() {
     <div className='layout'>          
     <Header />      
     <div className='content justify-content-md-center'>
+    <AuthProvider>
       <Routes>
         <Route path="/*" element={<Home  />} />
         <Route path="/Login" element={<Login />} />
@@ -24,6 +26,7 @@ function App() {
         <Route path="/Transfer" element={<Transaction type="Transfer"/>} />
         <Route path="/AccountResume" element={<AccountResume  />} />            
       </Routes>
+      </AuthProvider>
     </div>        
     <Footer />     
     </div>

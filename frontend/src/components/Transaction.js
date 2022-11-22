@@ -3,11 +3,11 @@ import { TextField } from './TextField';
 import { Card, Row } from "react-bootstrap";
 import * as Yup from 'yup';
 import UserInfo from './UserInfo';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Unauthorized from './Unauthorized';
-import { auth } from "../config/firebase";
 import  axios  from 'axios';
 import Swal from 'sweetalert2';
+import { AuthContext } from "../config/auth";
 
 const userAPI = process.env.REACT_APP_API_URL+'/user';
 const transactionAPI = process.env.REACT_APP_API_URL+'/transaction';
@@ -15,14 +15,13 @@ const transferAPI = transactionAPI+'/transfer';
 
 function Transaction ( {type} ){ 
 
-  const [user, setUser] = useState({});    
+  const { currentUser } = useContext(AuthContext);  
+  const [user, setUser] = useState({});  
  
-  useEffect(() => {   
-    const userToken = auth.currentUser;
-    
-    userToken.getIdToken()
+  useEffect(() => {
+    currentUser.getIdToken()
       .then( idToken => {        
-        axios.get(`${userAPI}/${userToken.email}`, {headers: { 'Authorization' : idToken }})
+        axios.get(`${userAPI}/${currentUser.email}`, {headers: { 'Authorization' : idToken }})
         .then( res =>{          
           if(res.status === 200){
             setUser({
@@ -35,37 +34,9 @@ function Transaction ( {type} ){
         })
       })    
       .catch( e => console.error(e) )
-  },[])
+  },[currentUser])
 
-  const validateTransfer = Yup.object({    
-    Transfer: Yup.string()
-      .email("E-mail is not valid")
-      .required("E-mail is required")
-      .test('Email','You can not transfer money to same account.',
-        function(value) {
-          return value===user.email? false : true            
-        }
-      ),
-    Amount: Yup.number()
-      .positive()
-      .test(
-        'is-decimal',
-        'invalid decimal ex. 45.25',
-        value => (value + "").match(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/),
-      )
-      .test('Balance','Amount is greather than your balance, this is not allowed.',
-        function(value) {
-          return (type==='Withdraw' || type==='Transfer' )? value <= user.balance : true            
-        }
-      )
-      .required("Amount is required")
-      .max(1000000, "Maximun amount permited is 1,000,000"),
-    Description: Yup.string()
-      .max(100, "Description must be 100 characters or less")
-      .required("Description required"),   
-  });
-  
-  const validate = validateTransfer.omit(['Transfer']);
+ 
 
   const handleSubmit = async (values, {resetForm}) => {
     
@@ -78,9 +49,8 @@ function Transaction ( {type} ){
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirm'
     }).then((result) => {
-      if (result.isConfirmed) {        
-        const userToken = auth.currentUser;    
-        userToken.getIdToken()
+      if (result.isConfirmed) {                
+        currentUser.getIdToken()
         .then( idToken => {
           if (type === 'Transfer'){            
             axios.get(`${userAPI}/${values.Transfer}`, {headers: { 'Authorization' : idToken }})           
@@ -132,7 +102,7 @@ function Transaction ( {type} ){
             }
             axios.post(transactionAPI, userTransition, {headers: { 'Authorization' : idToken }})
             .then( res =>{  
-              axios.get(`${userAPI}/${userToken.email}`, {headers: { 'Authorization' : idToken }})
+              axios.get(`${userAPI}/${currentUser.email}`, {headers: { 'Authorization' : idToken }})
                .then( res =>{                
                 if(res.status === 200){
                   setUser({
@@ -159,7 +129,7 @@ function Transaction ( {type} ){
     <div className="row justify-content-md-center">            
       <div className="col-md-5 mt-5">
         {
-          (user?.email)?(
+          (currentUser?.email)?(
             <Card >
             <Card.Header>
               <UserInfo 
@@ -170,44 +140,7 @@ function Transaction ( {type} ){
             </Card.Header>
             <Card.Body>                
               <Row>
-                <Formik
-                  initialValues={                    
-                    { 
-                      Amount: '', 
-                      Description: '',
-                      Transfer:''
-                    }}
-                  validationSchema={
-                    (type ==='Transfer')? (validateTransfer):(validate)
-                  }  
-                  onSubmit={handleSubmit}
-                >
-                   {({ errors, values }) => (
-                  <Form>
-                    {
-                      (type === 'Transfer') ? (
-                        <TextField label="Transfer to E-mail" name="Transfer" type="text" />
-                      ):(<></>)
-                    }
-                    <TextField label="Amount" name="Amount" type="Number" />     
-                    <TextField label="Description" name="Description" type="text" />   
-                    <Row className='justify-content-md-center'>                      
-                    <button name="submit" className="btn btn-dark mt-3" type="submit" disabled={
-                      (type ==='Transfer')? (
-                        values.Amount.length===0 || 
-                        values.Description.length===0 ||                        
-                        errors.Amount ||
-                        errors.Transfer
-                      ):(
-                        values.Amount.length===0 || 
-                        values.Description.length===0 ||
-                        errors.Amount
-                      )
-                      
-                    }>{type}</button>
-                    </Row>                      
-                  </Form>)}
-                </Formik>
+               <TransactionForm user={user} type={type} handleSubmit={handleSubmit}/>
               </Row>                     
             </Card.Body>
           </Card>
@@ -219,6 +152,80 @@ function Transaction ( {type} ){
       </div>           
     </div>   
   )
+}
+
+function TransactionForm({ user, type, handleSubmit }){
+
+  const validateTransfer = Yup.object({    
+    Transfer: Yup.string()
+      .email("E-mail is not valid")
+      .required("E-mail is required")
+      .test('Email','You can not transfer money to same account.',
+        function(value) {
+          return value===user.email? false : true            
+        }
+      ),
+    Amount: Yup.number()
+      .positive()
+      .test(
+        'is-decimal',
+        'invalid decimal ex. 45.25',
+        value => (value + "").match(/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/),
+      )
+      .test('Balance','Amount is greather than your balance, this is not allowed.',
+        function(value) {
+          return (type==='Withdraw' || type==='Transfer' )? value <= user.balance : true            
+        }
+      )
+      .required("Amount is required")
+      .max(1000000, "Maximun amount permited is 1,000,000"),
+    Description: Yup.string()
+      .max(100, "Description must be 100 characters or less")
+      .required("Description required"),   
+  });
+  
+  const validate = validateTransfer.omit(['Transfer']);
+
+  return(
+    <Formik
+    initialValues={                    
+      { 
+        Amount: '', 
+        Description: '',
+        Transfer:''
+      }}
+    validationSchema={
+      (type ==='Transfer')? (validateTransfer):(validate)
+    }  
+    onSubmit={handleSubmit}
+  >
+     {({ errors, values }) => (
+    <Form>
+      {
+        (type === 'Transfer') ? (
+          <TextField label="Transfer to E-mail" name="Transfer" type="text" />
+        ):(<></>)
+      }
+      <TextField label="Amount" name="Amount" type="Number" />     
+      <TextField label="Description" name="Description" type="text" />   
+      <Row className='justify-content-md-center'>                      
+      <button name="submit" className="btn btn-dark mt-3" type="submit" disabled={
+        (type ==='Transfer')? (
+          values.Amount.length===0 || 
+          values.Description.length===0 ||                        
+          errors.Amount ||
+          errors.Transfer
+        ):(
+          values.Amount.length===0 || 
+          values.Description.length===0 ||
+          errors.Amount
+        )        
+      }>{type}</button>
+      </Row>                      
+    </Form>)}
+  </Formik>
+
+  );
 }
 
   export default Transaction;

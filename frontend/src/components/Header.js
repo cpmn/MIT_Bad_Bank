@@ -21,12 +21,10 @@ import { auth } from "../config/firebase";
 import { signOut } from 'firebase/auth'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-
 function Header(){ 
   let navigate = useNavigate();
   const hours = new Date().getHours();  
-  const [user, loading, error] = useAuthState(auth);
-  console.log("USER-HOOK: ", user);
+  const [user, loading, error] = useAuthState(auth);  
   if (loading) {
     return (
       <>
@@ -36,7 +34,7 @@ function Header(){
   }
   if (error) {
     console.log(error);
-  }  
+  }
   return(
     <Navbar bg="light" variant='light' expand="lg" sticky='top' collapseOnSelect>
       <Navbar.Brand>          
@@ -85,7 +83,7 @@ function Header(){
                 
                 <Nav.Link className='mr-5' data-tip data-for="logout"  onClick={() => { 
                     signOut(auth);                     
-                    navigate('../');
+                    navigate('/');
                     }}
                 ><FontAwesomeIcon icon={faSignOut} />  LogOut
                     <ReactTooltip id="logout" place='top'>Log-Out, Exit BadBank.</ReactTooltip>
@@ -93,10 +91,10 @@ function Header(){
               </>
             ): (
               <>
-                <Nav.Link className='mr-5' href="#/CreateAccount/"  data-tip data-for="account"><FontAwesomeIcon icon={faUserPlus} /> Create User
+                <Nav.Link className='mr-5' href="#/CreateAccount"  data-tip data-for="account"><FontAwesomeIcon icon={faUserPlus} /> Create User
                   <ReactTooltip id="account" place='top'>Create new user</ReactTooltip>
                 </Nav.Link>                
-                <Nav.Link className='mr-5' href="#/Login/"  data-tip data-for="login"><FontAwesomeIcon icon={faUser} /> Login
+                <Nav.Link className='mr-5' href="#/Login"  data-tip data-for="login"><FontAwesomeIcon icon={faUser} /> Login
                   <ReactTooltip id="login" place='top'>Login</ReactTooltip>
                 </Nav.Link>
               </>
