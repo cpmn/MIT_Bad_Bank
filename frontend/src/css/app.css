@@ -49,4 +49,11 @@
   flex-direction:column; 
   justify-content:space-between;
 }
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+  background-color: white;
+}
 

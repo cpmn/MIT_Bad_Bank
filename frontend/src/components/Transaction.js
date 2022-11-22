@@ -1,10 +1,9 @@
 import { Formik, Form, } from 'formik';
 import { TextField } from './TextField';
-import { Card, Row } from "react-bootstrap";
+import { Card, Row, Spinner } from "react-bootstrap";
 import * as Yup from 'yup';
 import UserInfo from './UserInfo';
 import { useState, useEffect, useContext } from 'react'
-import Unauthorized from './Unauthorized';
 import  axios  from 'axios';
 import Swal from 'sweetalert2';
 import { AuthContext } from "../config/auth";
@@ -17,25 +16,31 @@ function Transaction ( {type} ){
 
   const { currentUser } = useContext(AuthContext);  
   const [user, setUser] = useState({});  
+  const [loading, setLoading] = useState(true);
+
+  
  
   useEffect(() => {
     currentUser.getIdToken()
-      .then( idToken => {        
-        axios.get(`${userAPI}/${currentUser.email}`, {headers: { 'Authorization' : idToken }})
-        .then( res =>{          
-          if(res.status === 200){
-            setUser({
-              account: res.data.account,
-              name: res.data.name,
-              email: res.data.email,
-              balance: res.data.balance
-            });
-          }
-        })
-      })    
-      .catch( e => console.error(e) )
+    .then( idToken => {
+      axios.get(`${userAPI}/${currentUser.email}`, {headers: { 'Authorization' : idToken }})
+      .then( res =>{          
+        if(res.status === 200){
+          setUser({
+            account: res.data.account,
+            name: res.data.name,
+            email: res.data.email,
+            balance: res.data.balance
+          });
+          setLoading(false);
+        }
+      })
+    }).catch( e => {
+      console.error(e);
+      setLoading(false);
+    })
   },[currentUser])
-
+  
  
 
   const handleSubmit = async (values, {resetForm}) => {
@@ -127,28 +132,33 @@ function Transaction ( {type} ){
   }    
   return (
     <div className="row justify-content-md-center">            
-      <div className="col-md-5 mt-5">
-        {
-          (currentUser?.email)?(
-            <Card >
-            <Card.Header>
-              <UserInfo 
-                title={type} 
-                userAccount={user.account} 
-                userName={user.name} 
-                userBalance={user.balance} />
-            </Card.Header>
-            <Card.Body>                
-              <Row>
-               <TransactionForm user={user} type={type} handleSubmit={handleSubmit}/>
-              </Row>                     
-            </Card.Body>
-          </Card>
-          ):
-          (
-            <Unauthorized />
-          )
-        }   
+      <div className="col-md-5 mt-5">        
+      <Card >
+          {
+            loading ? (
+              <Card.Header className='d-flex justify-content-center'>
+              <Spinner className='loader' animation="border" variant='danger' role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+              </Card.Header>
+            ) : (
+            <> 
+              <Card.Header>
+                <UserInfo 
+                  title={type} 
+                  userAccount={user.account} 
+                  userName={user.name} 
+                  userBalance={user.balance} />
+              </Card.Header>
+              <Card.Body>                
+                <Row>
+                  <TransactionForm user={user} type={type} handleSubmit={handleSubmit}/>
+                </Row>                     
+              </Card.Body>              
+            </>              
+            )
+          }
+         </Card>           
       </div>           
     </div>   
   )

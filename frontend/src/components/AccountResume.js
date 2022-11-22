@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from "../config/auth";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import UserInfo from './UserInfo';
 import TableInformation from "./TableInformation";
-import Unauthorized from './Unauthorized';
 import  axios  from 'axios'
 
 const userAPI = process.env.REACT_APP_API_URL+'/user';
@@ -14,6 +13,9 @@ function AccountResume(){
   const { currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});  
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  
 
   useEffect(() => {
     currentUser.getIdToken()    
@@ -32,10 +34,11 @@ function AccountResume(){
             axios.get(`${transactionsAPI}/${res.data.account}`, {headers: { 'Authorization' : idToken }})
               .then( res =>{              
               setTransactions(res.data)
+              setLoading(false);
             }).catch( e => console.error(e)); 
           }          
         }).catch( e => console.error(e));
-      }).catch( e => console.error(e));  
+      }).catch( e => console.error(e));       
   },[currentUser]);
 
     const headers = ['#','Date','Transacction','Description', 'Amount', 'Balance'];    
@@ -43,7 +46,7 @@ function AccountResume(){
     <div className="row justify-content-md-center">          
       <div className="col-md-5 mt-5">
       {
-        (user?.email)?(
+        (!loading)?(
           <Card>
             <Card.Header>
               <UserInfo 
@@ -58,7 +61,13 @@ function AccountResume(){
           </Card>            
         ):
         (
-          <Unauthorized />
+          <Card>
+            <Card.Header className='d-flex justify-content-center'>
+              <Spinner className='loader' animation="border" variant='danger' role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Card.Header>
+          </Card>
         )
       }
       </div>        
