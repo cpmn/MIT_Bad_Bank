@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   },[])
 
   if (loading){    
-    return <h1> NEW Loading ...</h1>
+    return <h1>  Loading ...</h1>
   } else {
     return (
       <AuthContext.Provider value={{currentUser}}>
